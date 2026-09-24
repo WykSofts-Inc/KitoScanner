@@ -263,7 +263,7 @@ public struct KitoScanResultCard: View {
         return result
     }
 
-    private func eventActions(_ event: KitoCalendarEvent) -> [KitoResultAction] {
+    private func eventActions(_ event: KitoScannedEvent) -> [KitoResultAction] {
         [KitoResultAction(id: "calendar", title: "Add to calendar", systemImage: "calendar.badge.plus", prominent: true, behaviour: .run { showsEvent = true }),
          KitoResultAction(id: "share", title: "Share", systemImage: "square.and.arrow.up", behaviour: .share(event.title))]
     }
@@ -445,7 +445,7 @@ struct KitoResultDetail: View {
         }
     }
 
-    private func eventDetail(_ event: KitoCalendarEvent) -> some View {
+    private func eventDetail(_ event: KitoScannedEvent) -> some View {
         HStack(alignment: .top, spacing: theme.spacing.md) {
             if let start = event.start {
                 VStack(spacing: 0) {
@@ -573,7 +573,7 @@ struct KitoResultMap: View {
 
 enum KitoEventFormatting {
     /// "Wed 14 Oct, 09:00 – 17:00" or "Wed 14 Oct · All day".
-    static func when(_ event: KitoCalendarEvent) -> String {
+    static func when(_ event: KitoScannedEvent) -> String {
         guard let start = event.start else { return "Date to be confirmed" }
         let day = start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
         if event.isAllDay { return "\(day) · All day" }

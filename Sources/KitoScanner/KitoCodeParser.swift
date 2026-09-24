@@ -226,8 +226,8 @@ public enum KitoCodeParser {
         return parts.isEmpty ? nil : parts.joined(separator: ", ")
     }
 
-    static func event(_ text: String) -> KitoCalendarEvent? {
-        var event = KitoCalendarEvent(title: "")
+    static func event(_ text: String) -> KitoScannedEvent? {
+        var event = KitoScannedEvent(title: "")
         var inEvent = !text.uppercased().hasPrefix("BEGIN:VCALENDAR")
         for line in contentLines(text) {
             if line.name == "BEGIN", line.value.uppercased() == "VEVENT" { inEvent = true; continue }

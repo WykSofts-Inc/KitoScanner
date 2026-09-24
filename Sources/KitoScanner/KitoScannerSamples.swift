@@ -19,7 +19,7 @@ public enum KitoScannerSamples {
     public static let contact = KitoContactCard(name: "Achieng Owuor", organization: "Safari Tech", jobTitle: "Product designer",
                                                 phones: ["+254 712 345 678"], emails: ["achieng@example.co.ke"],
                                                 address: "Kenyatta Avenue, Nairobi", website: "https://example.co.ke")
-    public static let event = KitoCalendarEvent(title: "Nairobi Tech Week", start: eventStart, end: eventStart.addingTimeInterval(8 * 3_600),
+    public static let event = KitoScannedEvent(title: "Nairobi Tech Week", start: eventStart, end: eventStart.addingTimeInterval(8 * 3_600),
                                                 location: "KICC, Nairobi", notes: "Hall B. Bring your badge.")
     public static let place = KitoGeoPoint(latitude: -1.28638, longitude: 36.81723, query: "Kenyatta Avenue, Nairobi")
     public static let message = KitoTextMessage(number: "+254712345678", body: "Nimefika, niko gate")

@@ -119,7 +119,7 @@ struct KitoNewContactSheet: UIViewControllerRepresentable {
 /// The system event editor, filled in from a scanned event. On iOS 17 it runs without
 /// calendar permission.
 struct KitoEventEditSheet: UIViewControllerRepresentable {
-    let event: KitoCalendarEvent
+    let event: KitoScannedEvent
     let onDone: () -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(onDone: onDone) }
