@@ -48,13 +48,12 @@ struct KitoDataScannerView: UIViewControllerRepresentable {
     func updateUIViewController(_ scanner: DataScannerViewController, context: Context) {
         context.coordinator.parent = self
         if isScanning, !scanner.isScanning {
-            do {
-                try scanner.startScanning()
-            } catch {
-                // Not during the view update: the fallback changes state.
-                DispatchQueue.main.async { onUnavailable() }
+            // Outside the view update: starting reports zoom, which changes state.
+            let coordinator = context.coordinator
+            DispatchQueue.main.async { [weak scanner] in
+                guard let scanner else { return }
+                coordinator.start(scanner, attemptsLeft: 20)
             }
-            reportZoom(scanner)
         } else if !isScanning, scanner.isScanning {
             scanner.stopScanning()
         }
@@ -67,19 +66,32 @@ struct KitoDataScannerView: UIViewControllerRepresentable {
         scanner.stopScanning()
     }
 
-    private func reportZoom(_ scanner: DataScannerViewController) {
-        let low = scanner.minZoomFactor
-        let high = max(scanner.maxZoomFactor, low)
-        let factor = scanner.zoomFactor
-        DispatchQueue.main.async { onZoom(factor, low...min(high, 10)) }
-    }
-
     @MainActor
     final class Coordinator: NSObject, DataScannerViewControllerDelegate {
         var parent: KitoDataScannerView
 
         init(parent: KitoDataScannerView) {
             self.parent = parent
+        }
+
+        /// Starts once the scanner is on screen; the data scanner can't start before that.
+        func start(_ scanner: DataScannerViewController, attemptsLeft: Int) {
+            guard !scanner.isScanning, parent.isScanning else { return }
+            guard scanner.view.window != nil else {
+                guard attemptsLeft > 0 else { return }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self, weak scanner] in
+                    guard let self, let scanner else { return }
+                    self.start(scanner, attemptsLeft: attemptsLeft - 1)
+                }
+                return
+            }
+            do {
+                try scanner.startScanning()
+                let low = scanner.minZoomFactor
+                parent.onZoom(scanner.zoomFactor, low...min(max(scanner.maxZoomFactor, low), 10))
+            } catch {
+                parent.onUnavailable()
+            }
         }
 
         func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem]) {
