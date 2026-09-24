@@ -131,10 +131,21 @@ soon as it's read. The parsing is available on its own:
 `KitoScannerSamples` has sample payloads, photo-like code images, a test card and two document
 pages, all drawn on device, for previews and the Simulator.
 
+## Migrating from 0.1
+
+0.2.0 renames two types so KitoScanner can be imported in the same file as KitoCalendar and
+KitoCheckout without "ambiguous" errors:
+
+- `KitoCalendarEvent` is now `KitoScannedEvent` (the event read out of a QR code; `.event(_)` on
+  `KitoScannedCode` carries it).
+- `KitoCardBrand` is now `KitoScannedCardBrand` (the brand on a scanned `KitoCardDetails`).
+
+The cases, properties and initialisers are unchanged; only the names moved.
+
 ## Installation
 
 ```swift
-.package(url: "https://github.com/WykSofts-Inc/KitoScanner.git", from: "0.1.0")
+.package(url: "https://github.com/WykSofts-Inc/KitoScanner.git", from: "0.2.0")
 ```
 
 ## License

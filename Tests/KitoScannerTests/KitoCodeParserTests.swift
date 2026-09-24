@@ -182,7 +182,7 @@ final class KitoCodeParserTests: XCTestCase {
 
     func testEventRoundTrip() {
         let start = Date(timeIntervalSince1970: 1_800_000_000)
-        let event = KitoCalendarEvent(title: "Safari Rally, Naivasha", start: start, end: start.addingTimeInterval(7_200), location: "Kasarani")
+        let event = KitoScannedEvent(title: "Safari Rally, Naivasha", start: start, end: start.addingTimeInterval(7_200), location: "Kasarani")
         guard case .event(let parsed) = parse(event.payload) else { return XCTFail("not an event") }
         XCTAssertEqual(parsed, event)
     }

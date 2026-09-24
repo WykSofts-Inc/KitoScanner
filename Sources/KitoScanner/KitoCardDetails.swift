@@ -9,7 +9,7 @@
 import Foundation
 
 /// A payment card network, from the number's leading digits.
-public enum KitoCardBrand: String, CaseIterable, Hashable, Sendable {
+public enum KitoScannedCardBrand: String, CaseIterable, Hashable, Sendable {
     case visa, mastercard, amex, discover, jcb, unionPay, diners, unknown
 
     public var title: String {
@@ -38,7 +38,7 @@ public enum KitoCardBrand: String, CaseIterable, Hashable, Sendable {
     }
 
     /// Identifies the network from the leading digits.
-    public static func detect(_ number: String) -> KitoCardBrand {
+    public static func detect(_ number: String) -> KitoScannedCardBrand {
         let digits = number.filter(\.isNumber)
         func prefix(_ count: Int) -> Int { Int(digits.prefix(count)) ?? -1 }
         if digits.hasPrefix("4") { return .visa }
@@ -99,7 +99,7 @@ public struct KitoCardExpiry: Hashable, Sendable, Comparable {
 /// What `KitoCardScanner` reads off a card. The full number is never kept: only the last four
 /// digits, a masked form and whether it passed the Luhn check.
 public struct KitoCardDetails: Hashable, Sendable {
-    public let brand: KitoCardBrand
+    public let brand: KitoScannedCardBrand
     public let last4: String
     /// e.g. "•••• •••• •••• 4242"
     public let maskedNumber: String
@@ -107,7 +107,7 @@ public struct KitoCardDetails: Hashable, Sendable {
     public let expiry: KitoCardExpiry?
     public let holderName: String?
 
-    public init(brand: KitoCardBrand, last4: String, maskedNumber: String, isNumberValid: Bool, expiry: KitoCardExpiry?, holderName: String?) {
+    public init(brand: KitoScannedCardBrand, last4: String, maskedNumber: String, isNumberValid: Bool, expiry: KitoCardExpiry?, holderName: String?) {
         self.brand = brand
         self.last4 = last4
         self.maskedNumber = maskedNumber
@@ -119,7 +119,7 @@ public struct KitoCardDetails: Hashable, Sendable {
     /// Builds details from a full number, keeping only the masked parts.
     public init(number: String, expiry: KitoCardExpiry? = nil, holderName: String? = nil) {
         let digits = number.filter(\.isNumber)
-        let brand = KitoCardBrand.detect(digits)
+        let brand = KitoScannedCardBrand.detect(digits)
         self.brand = brand
         self.last4 = String(digits.suffix(4))
         self.maskedNumber = KitoCardMask.mask(digits, brand: brand)
@@ -132,12 +132,12 @@ public struct KitoCardDetails: Hashable, Sendable {
 /// Masks card numbers for display.
 public enum KitoCardMask {
     /// "4242424242424242" → "•••• •••• •••• 4242", grouped the way the brand prints it.
-    public static func mask(_ number: String, brand: KitoCardBrand? = nil, visible: Int = 4) -> String {
+    public static func mask(_ number: String, brand: KitoScannedCardBrand? = nil, visible: Int = 4) -> String {
         let digits = Array(number.filter(\.isNumber))
         guard !digits.isEmpty else { return "" }
         let shown = min(visible, digits.count)
         let masked = digits.enumerated().map { index, digit in index < digits.count - shown ? "•" : String(digit) }
-        let groups = (brand ?? KitoCardBrand.detect(String(digits))).groups(forLength: digits.count)
+        let groups = (brand ?? KitoScannedCardBrand.detect(String(digits))).groups(forLength: digits.count)
         var result: [String] = []
         var cursor = 0
         for size in groups where cursor < masked.count {

@@ -71,7 +71,7 @@ public enum KitoCodePayload: Hashable, Sendable {
     case email(KitoEmailMessage)
     case sms(KitoTextMessage)
     case geo(KitoGeoPoint)
-    case event(KitoCalendarEvent)
+    case event(KitoScannedEvent)
     case payment(KitoPaymentRequest)
     case product(KitoProductCode)
     case text(String)
@@ -324,7 +324,7 @@ public struct KitoGeoPoint: Hashable, Sendable {
 }
 
 /// An event from a `BEGIN:VEVENT` code.
-public struct KitoCalendarEvent: Hashable, Sendable {
+public struct KitoScannedEvent: Hashable, Sendable {
     public var title: String
     public var start: Date?
     public var end: Date?

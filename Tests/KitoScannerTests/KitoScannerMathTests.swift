@@ -52,15 +52,15 @@ final class KitoCheckDigitTests: XCTestCase {
 
 final class KitoCardTests: XCTestCase {
     func testBrands() {
-        XCTAssertEqual(KitoCardBrand.detect("4242424242424242"), .visa)
-        XCTAssertEqual(KitoCardBrand.detect("5555555555554444"), .mastercard)
-        XCTAssertEqual(KitoCardBrand.detect("2223003122003222"), .mastercard)
-        XCTAssertEqual(KitoCardBrand.detect("378282246310005"), .amex)
-        XCTAssertEqual(KitoCardBrand.detect("6011111111111117"), .discover)
-        XCTAssertEqual(KitoCardBrand.detect("3530111333300000"), .jcb)
-        XCTAssertEqual(KitoCardBrand.detect("6200000000000005"), .unionPay)
-        XCTAssertEqual(KitoCardBrand.detect("36227206271667"), .diners)
-        XCTAssertEqual(KitoCardBrand.detect("9999"), .unknown)
+        XCTAssertEqual(KitoScannedCardBrand.detect("4242424242424242"), .visa)
+        XCTAssertEqual(KitoScannedCardBrand.detect("5555555555554444"), .mastercard)
+        XCTAssertEqual(KitoScannedCardBrand.detect("2223003122003222"), .mastercard)
+        XCTAssertEqual(KitoScannedCardBrand.detect("378282246310005"), .amex)
+        XCTAssertEqual(KitoScannedCardBrand.detect("6011111111111117"), .discover)
+        XCTAssertEqual(KitoScannedCardBrand.detect("3530111333300000"), .jcb)
+        XCTAssertEqual(KitoScannedCardBrand.detect("6200000000000005"), .unionPay)
+        XCTAssertEqual(KitoScannedCardBrand.detect("36227206271667"), .diners)
+        XCTAssertEqual(KitoScannedCardBrand.detect("9999"), .unknown)
     }
 
     func testMasking() {
