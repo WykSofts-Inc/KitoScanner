@@ -125,6 +125,8 @@ struct KitoPhotoCodeScanner: View {
                 box(for: detection, imageFrame: frame)
             }
         }
+        // Vision boxes are physical image coordinates; keep them unmirrored in right-to-left layouts.
+        .environment(\.layoutDirection, .leftToRight)
     }
 
     private func box(for detection: KitoDetectedCode, imageFrame: CGRect) -> some View {

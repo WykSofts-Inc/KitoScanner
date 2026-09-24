@@ -306,7 +306,7 @@ struct KitoScanBanner: View {
                     Text(code.payload.summary).font(theme.typography.label.weight(.semibold)).foregroundStyle(.white).lineLimit(1)
                 }
                 Spacer(minLength: 8)
-                Image(systemName: "chevron.right").font(.caption.weight(.bold)).foregroundStyle(.white.opacity(0.6))
+                Image(systemName: "chevron.forward").font(.caption.weight(.bold)).foregroundStyle(.white.opacity(0.6))
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)

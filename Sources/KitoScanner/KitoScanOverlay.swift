@@ -204,6 +204,8 @@ struct KitoDetectionHighlight: View {
             .shadow(color: color.opacity(0.6), radius: 10)
             .frame(width: rect.width, height: rect.height)
             .position(x: rect.midX, y: rect.midY)
+            // `rect` comes from the camera in physical coordinates; keep it unmirrored.
+            .environment(\.layoutDirection, .leftToRight)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
     }

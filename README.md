@@ -133,6 +133,13 @@ soon as it's read. The parsing is available on its own:
 `KitoScannerSamples` has sample payloads, photo-like code images, a test card and two document
 pages, all drawn on device, for previews and the Simulator.
 
+## Right-to-left
+
+Controls, result cards and the page strip mirror automatically; chevrons and the page-reorder arrows follow the reading direction ("Move earlier" / "Move later").
+Camera and photo detections stay in physical coordinates, so the highlight boxes land on the real code in right-to-left layouts too.
+QR codes, barcodes and their digits are never mirrored, as scanners require.
+Nothing extra is needed from the app.
+
 ## Migrating from 0.1
 
 0.2.0 renames two types so KitoScanner can be imported in the same file as KitoCalendar and
