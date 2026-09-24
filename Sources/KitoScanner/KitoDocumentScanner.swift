@@ -392,15 +392,15 @@ public struct KitoDocumentScanner: View {
         }
         .buttonStyle(KitoScanPressStyle())
         .contextMenu {
-            Button { move(index, by: -1) } label: { Label("Move left", systemImage: "arrow.left") }.disabled(index == 0)
-            Button { move(index, by: 1) } label: { Label("Move right", systemImage: "arrow.right") }.disabled(index == originals.count - 1)
+            Button { move(index, by: -1) } label: { Label("Move earlier", systemImage: "arrow.backward") }.disabled(index == 0)
+            Button { move(index, by: 1) } label: { Label("Move later", systemImage: "arrow.forward") }.disabled(index == originals.count - 1)
             Button(role: .destructive) { remove(index) } label: { Label("Remove page", systemImage: "trash") }
         }
         .accessibilityLabel("Page \(index + 1)")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityActions {
-            Button("Move left") { move(index, by: -1) }
-            Button("Move right") { move(index, by: 1) }
+            Button("Move earlier") { move(index, by: -1) }
+            Button("Move later") { move(index, by: 1) }
             Button("Remove page") { remove(index) }
         }
     }
