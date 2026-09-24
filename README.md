@@ -1,5 +1,7 @@
 # KitoScanner
 
+**[Documentation](https://wyksofts-inc.github.io/KitoScanner/documentation/kitoscanner/)**
+
 Scanning for SwiftUI: live QR and barcode scanning, smart results for every kind of code, QR
 generation, document scanning to PDF and on-device card reading. Part of the
 [Kito](https://github.com/WykSofts-Inc/KitoDevKit) ecosystem.
